@@ -50,7 +50,8 @@ class FilmesTable extends AbstractTableGateway {
 			'filmes_foto' => $filmes->filmes_foto,
 			'filmes_preco' => $filmes->filmes_preco,
 			'filmes_status' => $filmes->filmes_status,
-			'filmes_descricao' => $filmes->filmes_descricao
+			'filmes_descricao' => $filmes->filmes_descricao,
+			'categoria_id' => (int) $filmes->categoria_id,
 		);
 
 		$idFilmes = (int) $filmes->filmes_id;
@@ -65,15 +66,15 @@ class FilmesTable extends AbstractTableGateway {
 			}
  		}
 	}
-	
+
 	public function removeFilmes($idFilmes) {
 		$idFilmes = (int) $idFilmes;
-		
+
 		if ($this->getFilmes($idFilmes)) {
 			$this->delete(array('filmes_id' => $idFilmes));
 		} else {
 			throw new \Exception("O filme não foi encontrado com o id ".$idFilmes);
-		}		
+		}
 	}
 
 }
