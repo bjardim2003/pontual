@@ -12,5 +12,15 @@
  */
 
 return array(
-    // ...
+    'db' => array(
+        'username' => 'root',
+        'password' => 'root',
+        'driver'         => 'PDO',
+        'dsn'            => 'mysql:dbname=pontual_filmes;host=localhost',
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ),
+    ),
 );

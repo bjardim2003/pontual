@@ -39,17 +39,26 @@ class Module
         );
     }
 
+    public function getViewHelperConfig()
+    {
+        return array(
+           'invokables' => array(
+              'utilHelper' => 'Application\Helper\UtilHelper',
+           ),
+        );
+    }
+
     public function getServiceConfig()
     {
     	return array(
     		'factories' => array(
     			'filmes_table' => function ($sm) {
-    				$adapter = $sm->get('zend_db_adapter');
+    				$adapter = $sm->get('Zend\Db\Adapter\Adapter');
     				$table = new FilmesTable($adapter);
     				return $table;
     			},
                 'categoria_table' => function ($sm) {
-                    $adapter = $sm->get('zend_db_adapter');
+                    $adapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $table = new CategoriaTable($adapter);
                     return $table;
                 }

@@ -20,6 +20,20 @@ class CategoriaTable extends AbstractTableGateway {
 		$this->initialize();
 	}
 
+	public function getAll()
+	{
+		return $this->select();
+	}
+
+	public function getAllFormArray()
+	{
+		$result = array();
+		foreach ($this->getAll() as $category) {
+			$result[$category->categoria_id] = $category->categoria_nome;
+		}
+		return $result;
+	}
+
 	public function fetchAll ($pageNumber = 1, $countPerPage = 2) {
 		$select = new Select();
 		$select->from($this->table)->order('categoria_nome');

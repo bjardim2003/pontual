@@ -12,6 +12,7 @@ use Zend\File\Transfer\Adapter\Http;
 class FilmesController extends AbstractActionController {
 
 	protected $filmesTable;
+	protected $categoryTable;
 
 	public function getFilmesTable() {
 		if (!$this->filmesTable) {
@@ -19,6 +20,14 @@ class FilmesController extends AbstractActionController {
 			$this->filmesTable = $sm->get('filmes_table');
 		}
 		return $this->filmesTable;
+	}
+
+	public function getCategoryTable() {
+		if (!$this->categoryTable) {
+			$sm = $this->getServiceLocator();
+			$this->categoryTable = $sm->get('categoria_table');
+		}
+		return $this->categoryTable;
 	}
 
 	public function indexAction() {
@@ -30,7 +39,7 @@ class FilmesController extends AbstractActionController {
 		}
 
 		$filmes = $this->getFilmesTable()->fetchAll($pageNumber, 10);
-		
+
 		return new ViewModel(array(
 			'messages' => $messages,
 			'filmes' => $filmes,
@@ -95,6 +104,9 @@ class FilmesController extends AbstractActionController {
 
 		}
 
+		$categories = $this->getCategoryTable()->getAllFormArray();
+		$form->get('categoria_id')->setValueOptions($categories);
+
 		$view = new ViewModel(array(
 				'form' => $form
 		));
@@ -110,8 +122,12 @@ class FilmesController extends AbstractActionController {
 		$filme = $this->getFilmesTable()->getFilmes($id);
 		$form = new FilmesForm();
 		$form->setBindOnValidate(false);
-		$form->bind($filme);
 		$form->get('submit')->setLabel('Alterar');
+
+		$categories = $this->getCategoryTable()->getAllFormArray();
+		$form->get('categoria_id')->setValueOptions($categories);
+
+		$form->bind($filme);
 
 		$request = $this->getRequest();
 
@@ -170,13 +186,13 @@ class FilmesController extends AbstractActionController {
 
 		return $view;
 	}
-	
+
 	public function removeAction() {
 		$id = $this->params('id');
-	
+
 		$this->getFilmesTable()->removeFilmes($id);
 		$this->flashMessenger()->addMessage(array('success' => 'Registro removido com sucesso!'));
 		$this->redirect()->toUrl("/categoria");
-	
-	}	
+
+	}
 }
