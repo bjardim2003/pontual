@@ -1,0 +1,24 @@
+<?php echo $this->form()->openTag($form) ?>
+<?php echo $this->formElement($form->get('categoria_id')); ?>
+    <fieldset>
+
+		<legend>Cadastro de Categoria</legend>
+
+		<div class="row-fluid">
+			<div class="control-group col-md-4">
+				<label class="control-label"><?php echo $this->formLabel($form->get('categoria_nome')); ?></label>
+				<div class="controls">
+				<?php echo $this->formElement($form->get('categoria_nome')); ?>
+				<p class="help-block"><?php echo $this->formElementErrors($form->get('categoria_nome')); ?></p>
+				</div>
+			</div>
+		</div>
+
+	</fieldset>
+
+	<div id="btn-fim col-md-12">
+		<?php echo $this->formElement($form->get('submit')); ?>
+		<?php echo $this->formElement($form->get('cancel')); ?>
+	</div>
+
+<?php echo $this->form()->closeTag($form) ?>

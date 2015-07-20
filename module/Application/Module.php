@@ -11,6 +11,8 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Application\Module\FilmesTable;
+use Application\Module\CategoriaTable;
 
 class Module
 {
@@ -35,5 +37,24 @@ class Module
                 ),
             ),
         );
+    }
+
+    public function getServiceConfig()
+    {
+    	return array(
+    		'factories' => array(
+    			'filmes_table' => function ($sm) {
+    				$adapter = $sm->get('zend_db_adapter');
+    				$table = new FilmesTable($adapter);
+    				return $table;
+    			},
+                'categoria_table' => function ($sm) {
+                    $adapter = $sm->get('zend_db_adapter');
+                    $table = new CategoriaTable($adapter);
+                    return $table;
+                }
+    		)
+    	);
+
     }
 }
