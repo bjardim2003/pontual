@@ -52,6 +52,9 @@ class FilmesController extends AbstractActionController {
 
 		$request = $this->getRequest();
 
+		$categories = $this->getCategoryTable()->getAllFormArray();
+		$form->get('categoria_id')->setValueOptions($categories);
+
 		if ($request->isPost()) {
 
 			$filmes = new Filmes();
@@ -67,6 +70,7 @@ class FilmesController extends AbstractActionController {
 
 			$form->setInputFilter($filmes->getInputFilter());
 			$form->setData($data);
+
 			if ($form->isValid()) {
 
 				if ($File['name'] != "") {
@@ -104,9 +108,6 @@ class FilmesController extends AbstractActionController {
 
 		}
 
-		$categories = $this->getCategoryTable()->getAllFormArray();
-		$form->get('categoria_id')->setValueOptions($categories);
-
 		$view = new ViewModel(array(
 				'form' => $form
 		));
@@ -142,7 +143,6 @@ class FilmesController extends AbstractActionController {
 			}
 			$data = array_merge($nonFile, array('filmes_foto' => $name_file));
 
-
 			$form->setData($data);
 
 			if ($form->isValid()) {
@@ -153,6 +153,7 @@ class FilmesController extends AbstractActionController {
 					$adapter->setValidators(array($size), $File['name']);
 
 					if (!$adapter->isValid()){
+
 						$dataError = $adapter->getMessages();
 						$erro = array();
 						foreach ($dataError as $row) {
@@ -169,11 +170,12 @@ class FilmesController extends AbstractActionController {
 							$this->flashMessenger()->addMessage(array('danger' => 'A foto não foi enviada!'));
 						}
 
-						$this->getFilmesTable()->saveFilmes($filme);
-						$this->flashMessenger()->addMessage(array('success' => 'Registro alterado com sucesso!'));
-						$this->redirect()->toUrl("/filmes");
 					}
 				}
+
+				$this->getFilmesTable()->saveFilmes($filme);
+				$this->flashMessenger()->addMessage(array('success' => 'Registro alterado com sucesso!'));
+				$this->redirect()->toUrl("/filmes");
 
 			}
 
