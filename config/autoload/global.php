@@ -16,7 +16,7 @@ return array(
         'username' => 'root',
         'password' => 'root',
         'driver'         => 'PDO',
-        'dsn'            => 'mysql:dbname=pontual_filmes;host=localhost',
+        'dsn'            => 'mysql:dbname=filmes;host=localhost',
     ),
     'service_manager' => array(
         'factories' => array(
