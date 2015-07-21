@@ -15,6 +15,7 @@ class Filmes implements InputFilterAwareInterface {
 	public $filmes_preco;
 	public $filmes_status;
 	public $filmes_foto;
+	public $categoria_id;
 
 	protected $inputFilter;
 
@@ -26,6 +27,7 @@ class Filmes implements InputFilterAwareInterface {
 		$this->filmes_preco = (isset($data['filmes_preco'])) ? $data['filmes_preco'] : null;
 		$this->filmes_status = (isset($data['filmes_status'])) ? $data['filmes_status'] : null;
 		$this->filmes_foto = (isset($data['filmes_foto'])) ? $data['filmes_foto'] : null;
+		$this->categoria_id = (isset($data['categoria_id'])) ? $data['categoria_id'] : null;
 	}
 
 	public function getArrayCopy () {
@@ -50,8 +52,8 @@ class Filmes implements InputFilterAwareInterface {
 							array('name' => 'StringTrim')
 					)
 			)));
-				
-			
+
+
 			$inputFilter->add($factory->createInput(array(
 				'name' => 'filmes_nome',
 				'required' => true,
@@ -84,6 +86,25 @@ class Filmes implements InputFilterAwareInterface {
 						'options' => array(
 							'messages' => array(
 								'isEmpty' => 'Valor do Aluguel deve ser diferente de branco.'
+							)
+						)
+					)
+				)
+
+			)));
+
+			$inputFilter->add($factory->createInput(array(
+				'name' => 'categoria_id',
+				'required' => true,
+				'filters' => array(
+						array('name' => 'Digits'),
+				),
+				'validators' => array(
+					array(
+						'name' => 'NotEmpty',
+						'options' => array(
+							'messages' => array(
+								'isEmpty' => 'Categoria deve ser setada',
 							)
 						)
 					)
